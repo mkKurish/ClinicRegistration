@@ -29,6 +29,7 @@ public class Utils {
 
     public static boolean cFIO(String source){
         if (source == null) return false;
+        if (source.length() > 25) return false;
         return source.matches("^[A-Z][a-z]+ [A-Z]\\.[A-Z]\\.$");
     }
 
