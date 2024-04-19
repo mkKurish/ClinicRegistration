@@ -61,4 +61,21 @@ public class Doctor {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder answer = new StringBuilder();
+        answer.append("doctor:").append(fio)
+                .append("; post:").append(post)
+                .append("; cabNum: ").append(cabNum)
+                .append("; schedule:").append(schedule);
+        return answer.toString();
+    }
+
+    public boolean equals(Doctor doc) {
+        if (this.cabNum != doc.cabNum) return false;
+        if (!this.fio.equals(doc.fio)) return false;
+        if (!this.post.equals(doc.post)) return false;
+        return this.schedule.equals(doc.schedule);
+    }
 }

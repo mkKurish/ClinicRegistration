@@ -76,4 +76,23 @@ public class Patient {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder answer = new StringBuilder();
+        answer.append("regNum:").append(regNum)
+                .append("; patient:").append(fio)
+                .append("; birth: ").append(birth)
+                .append("; address:").append(address)
+                .append("; workplace: ").append(workplace);
+        return answer.toString();
+    }
+
+    public boolean equals(Patient pat) {
+        if (this.birth != pat.birth) return false;
+        if (!this.fio.equals(pat.fio)) return false;
+        if (!this.address.equals(pat.address)) return false;
+        if (!this.regNum.equals(pat.regNum)) return false;
+        return this.workplace.equals(pat.workplace);
+    }
 }

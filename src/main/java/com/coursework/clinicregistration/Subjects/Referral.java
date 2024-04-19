@@ -62,4 +62,21 @@ public class Referral {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder answer = new StringBuilder();
+        answer.append("regNum:").append(regNum)
+                .append("; doctor:").append(doctorFIO)
+                .append("; date: ").append(date)
+                .append("; time:").append(time);
+        return answer.toString();
+    }
+
+    public boolean equals(Referral ref) {
+        if (!this.regNum.equals(ref.regNum)) return false;
+        if (!this.doctorFIO.equals(ref.doctorFIO)) return false;
+        if (!this.date.equals(ref.date)) return false;
+        return this.time.equals(ref.time);
+    }
 }
