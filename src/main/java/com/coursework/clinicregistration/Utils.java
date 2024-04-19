@@ -23,8 +23,8 @@ public class Utils {
         if (source == null) return false;
         if (source.length() != 9) return false;
         if (source.charAt(2) != '-') return false;
-        if (!source.substring(0, 2).matches("^\\d2$")) return false;
-        return source.substring(3).matches("^\\d2$");
+        if (!source.substring(0, 2).matches("^\\d{2}$")) return false;
+        return source.substring(3).matches("^\\d{6}$");
     }
 
     public static boolean cFIO(String source){
