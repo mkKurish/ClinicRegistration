@@ -2,7 +2,7 @@ package com.coursework.clinicregistration.Subjects;
 
 import com.coursework.clinicregistration.Utils;
 
-public class Doctor {
+public class Doctor implements Comparable {
     // format: up to 25 letters, surname + initials
     private String fio;
     // format: 5-50 letters
@@ -12,7 +12,8 @@ public class Doctor {
     // format: 5-50 letters
     private String schedule;
 
-    public Doctor() {}
+    public Doctor() {
+    }
 
     public String getFio() {
         return fio;
@@ -77,5 +78,21 @@ public class Doctor {
         if (!this.fio.equals(doc.fio)) return false;
         if (!this.post.equals(doc.post)) return false;
         return this.schedule.equals(doc.schedule);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        String doc2fio;
+        try {
+            doc2fio = ((Doctor) o).fio;
+        } catch (ClassCastException e) {
+            try {
+                doc2fio = (String) o;
+            } catch (ClassCastException e2) {
+                System.out.println("Can't compare.");
+                return 0;
+            }
+        }
+        return this.fio.compareTo(doc2fio);
     }
 }
