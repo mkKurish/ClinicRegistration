@@ -66,10 +66,10 @@ public class Doctor implements Comparable {
     @Override
     public String toString() {
         StringBuilder answer = new StringBuilder();
-        answer.append("doctor:").append(fio)
-                .append("; post:").append(post)
+        answer.append("doctor: ").append(fio)
+                .append("; post: ").append(post)
                 .append("; cabNum: ").append(cabNum)
-                .append("; schedule:").append(schedule);
+                .append("; schedule: ").append(schedule);
         return answer.toString();
     }
 

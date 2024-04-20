@@ -2,7 +2,7 @@ package com.coursework.clinicregistration.Subjects;
 
 import com.coursework.clinicregistration.Utils;
 
-public class Referral {
+public class Referral implements Comparable{
     // format: MM-NNNNNN
     private String regNum;
     // format: up to 25 letters, surname + initials
@@ -66,10 +66,10 @@ public class Referral {
     @Override
     public String toString() {
         StringBuilder answer = new StringBuilder();
-        answer.append("regNum:").append(regNum)
-                .append("; doctor:").append(doctorFIO)
+        answer.append("regNum: ").append(regNum)
+                .append("; doctor: ").append(doctorFIO)
                 .append("; date: ").append(date)
-                .append("; time:").append(time);
+                .append("; time: ").append(time);
         return answer.toString();
     }
 
@@ -78,5 +78,21 @@ public class Referral {
         if (!this.doctorFIO.equals(ref.doctorFIO)) return false;
         if (!this.date.equals(ref.date)) return false;
         return this.time.equals(ref.time);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        String ref2regNum;
+        try {
+            ref2regNum = ((Referral) o).regNum;
+        } catch (ClassCastException e) {
+            try {
+                ref2regNum = (String) o;
+            } catch (ClassCastException e2) {
+                System.out.println("Can't compare.");
+                return 0;
+            }
+        }
+        return this.regNum.compareTo(ref2regNum);
     }
 }

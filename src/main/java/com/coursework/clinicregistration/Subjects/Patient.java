@@ -80,10 +80,10 @@ public class Patient {
     @Override
     public String toString() {
         StringBuilder answer = new StringBuilder();
-        answer.append("regNum:").append(regNum)
-                .append("; patient:").append(fio)
+        answer.append("regNum: ").append(regNum)
+                .append("; patient: ").append(fio)
                 .append("; birth: ").append(birth)
-                .append("; address:").append(address)
+                .append("; address: ").append(address)
                 .append("; workplace: ").append(workplace);
         return answer.toString();
     }
