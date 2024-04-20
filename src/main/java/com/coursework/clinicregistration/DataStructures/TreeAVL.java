@@ -132,9 +132,10 @@ public class TreeAVL<T extends Comparable> {
         return balance(node);
     }
 
-    public <K> boolean remove(K value) {
+    public <K> boolean remove(K value, CallBack callBack) {
         successRemove = false;
         root = remove(value, root);
+        callBack.callingBack();
         return successRemove;
     }
 
@@ -179,9 +180,11 @@ public class TreeAVL<T extends Comparable> {
     private String toString(TreeNode<T> node) {
         if (node == null) return "";
         StringBuilder sb = new StringBuilder();
-        sb.append(toString(node.left));
+        String leftString = toString(node.left);
+        String rightString = toString(node.right);
+        if (leftString.length() > 0) sb.append(leftString).append("\n");
         sb.append(node.data.toString());
-        sb.append(toString(node.right));
+        if (rightString.length() > 0) sb.append("\n").append(rightString);
         return sb.toString();
     }
 
