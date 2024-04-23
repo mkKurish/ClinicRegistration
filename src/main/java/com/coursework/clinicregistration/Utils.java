@@ -10,7 +10,7 @@ public class Utils {
 
     public static boolean cLettersAndDot(String source) {
         if (source == null) return false;
-        return source.matches("^[A-za-z. ]+$");
+        return source.matches("^[A-za-zА-Яа-яёЁ. ]+$");
     }
 
     public static boolean cFourDigits(int source){
@@ -32,7 +32,8 @@ public class Utils {
     public static boolean cFIO(String source){
         if (source == null) return false;
         if (source.length() > 25) return false;
-        return source.matches("^[A-Z][a-z]+ [A-Z]\\.[A-Z]\\.$");
+//        return source.matches("^([A-Z][a-z]+ [A-Z]\\.[A-Z]\\.|[А-Я][а-я]+ [А-Я]\\.[А-Я]\\.)$");
+        return source.matches("^([A-Z][a-z]+|[А-Я][а-я]+) ([A-Z]|[А-Я])\\.([A-Z]|[А-Я])\\.$");
     }
 
     public static boolean cDate(String source){

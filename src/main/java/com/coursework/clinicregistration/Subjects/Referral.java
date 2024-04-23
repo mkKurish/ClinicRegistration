@@ -2,7 +2,7 @@ package com.coursework.clinicregistration.Subjects;
 
 import com.coursework.clinicregistration.Utils;
 
-public class Referral implements Comparable{
+public class Referral implements Comparable {
     // format: MM-NNNNNN
     private String regNum;
     // format: up to 25 letters, surname + initials

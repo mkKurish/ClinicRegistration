@@ -45,7 +45,7 @@ public class Main {
                     String newPfio = Utils.stringInput("Введите ФИО пациента: ");
                     while (!newPatient.setFio(newPfio)) {
                         System.out.println("Некорректно введено ФИО!");
-                        System.out.println("Формат: 5-50 символов, допускаются только символы A-z и точка.");
+                        System.out.println("Формат: 5-50 символов, допускаются только символы A-z, А-я и точка.");
                         newPfio = Utils.stringInput("Введите ФИО пациента: ");
                     }
                     int birthYear = Utils.intInput("Введите год рождения пациента: ");
@@ -119,13 +119,15 @@ public class Main {
                         System.out.println(foundPatient.toString());
                         DoubleLinkedList<Referral> patientRefs = referrals.findBy("regNum", foundPatient.getRegNum());
                         Iterator<Referral> refIt = patientRefs.iterator();
-                        if (refIt.hasNext())
-                            System.out.print("Больной имеет направления к врачам: ");
-                        while (refIt.hasNext()) {
-                            System.out.print(refIt.next().getDoctorFIO());
-                            if (refIt.hasNext()) System.out.print(", ");
+                        if (refIt.hasNext()) {
+                            StringBuilder sb = new StringBuilder();
+                            sb.append("Больной имеет направления к врачам: ");
+                            while (refIt.hasNext()) {
+                                sb.append(refIt.next().getDoctorFIO());
+                                if (refIt.hasNext()) sb.append(", ");
+                            }
+                            System.out.println(sb.toString());
                         }
-                        System.out.print("\n");
                     }
                     break;
                 case 16:
@@ -134,7 +136,7 @@ public class Main {
                     String patientFio = Utils.stringInput("Введите ФИО пациента: ");
                     while (!Patient.trySetFio(patientFio)) {
                         System.out.println("Некорректно введено ФИО!");
-                        System.out.println("Формат: 5-50 символов, допускаются только символы A-z и точка.");
+                        System.out.println("Формат: 5-50 символов, допускаются только символы A-z, А-я и точка.");
                         patientFio = Utils.stringInput("Введите ФИО пациента: ");
                     }
                     ArrayList<Patient> foundPatients = patients.findByOtherField("fio", patientFio);
@@ -509,6 +511,21 @@ public class Main {
                     patients.add(p2);
                     patients.add(p3);
                     patients.add(p4);
+
+                    Referral r1 = new Referral();
+                    r1.setRegNum(p1.getRegNum());
+                    r1.setDoctorFIO(d2.getFio());
+                    r1.setDate("20.03.2024");
+                    r1.setTime("12:30");
+
+                    Referral r2 = new Referral();
+                    r2.setRegNum(p4.getRegNum());
+                    r2.setDoctorFIO(d2.getFio());
+                    r2.setDate("22.10.2025");
+                    r2.setTime("09:00");
+
+                    referrals.add(r1);
+                    referrals.add(r2);
 
                     System.out.println("Хеш пациента " + p1.getRegNum() + ": " + patients.findHashByKey(p1.getRegNum()));
                     System.out.println("Хеш пациента " + p2.getRegNum() + ": " + patients.findHashByKey(p2.getRegNum()));
