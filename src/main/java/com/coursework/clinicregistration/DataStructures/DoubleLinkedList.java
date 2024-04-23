@@ -2,6 +2,7 @@ package com.coursework.clinicregistration.DataStructures;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 class Node<T> {
@@ -52,27 +53,37 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         Field keyField = dataClass.getDeclaredField(fieldName);
         keyField.setAccessible(true);
         Node<T> curr = this.head;
-        while (curr != null) {
+        int count = 0;
+        while (curr != null && count <= length) {
             if (keyField.get(curr.data).equals(value)) {
+                if (curr.equals(head)) head = head.next;
                 if (curr.prev != null) curr.prev.next = curr.next;
                 if (curr.next != null) curr.next.prev = curr.prev;
                 return true;
             }
             curr = curr.next;
+            count++;
         }
         return false;
     }
 
-    public <K> T[] findBy(String fieldName, K value) throws NoSuchFieldException, IllegalAccessException {
+    public <K> int removeAllBy(String fieldName, K value) throws NoSuchFieldException, IllegalAccessException {
+        int count = 0;
+        while(removeFirstBy(fieldName, value)){
+            count++;
+        }
+        return count;
+    }
+
+    public <K> DoubleLinkedList<T> findBy(String fieldName, K value) throws NoSuchFieldException, IllegalAccessException {
         Field keyField = dataClass.getDeclaredField(fieldName);
         keyField.setAccessible(true);
         @SuppressWarnings("unchecked")
-        T[] answer = (T[]) Array.newInstance(dataClass, length);
-        int i = 0;
+        DoubleLinkedList<T> answer = new DoubleLinkedList<>(dataClass);
         Node<T> curr = this.head;
         while (curr != null) {
             if (keyField.get(curr.data).equals(value)) {
-                answer[i++] = curr.data;
+                answer.add(curr.data);
             }
             curr = curr.next;
         }
@@ -98,6 +109,10 @@ public class DoubleLinkedList<T> implements Iterable<T> {
 
     Node<T> getHead() {
         return head;
+    }
+
+    public T getFirst(){
+        return head != null ? head.data : null;
     }
 }
 

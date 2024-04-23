@@ -80,6 +80,14 @@ public class Doctor implements Comparable {
         return this.schedule.equals(doc.schedule);
     }
 
+    public static boolean trySetFio(String fio){
+        return Utils.cFIO(fio);
+    }
+
+    public static boolean trySetPost(String post){
+        return Utils.cLetters5_50(post);
+    }
+
     @Override
     public int compareTo(Object o) {
         String doc2fio;

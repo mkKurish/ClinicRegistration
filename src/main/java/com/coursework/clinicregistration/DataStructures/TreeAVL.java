@@ -1,9 +1,7 @@
 package com.coursework.clinicregistration.DataStructures;
 
 import com.coursework.clinicregistration.Algorithms.TextSearch;
-import com.coursework.clinicregistration.CallBack;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -86,7 +84,7 @@ public class TreeAVL<T extends Comparable> {
 
     private TreeNode<T> add(T data, TreeNode<T> node) {
         if (node == null) return new TreeNode<T>(data);
-        if (node.data.compareTo(data) < 0) node.left = add(data, node.left);
+        if (node.data.compareTo(data) > 0) node.left = add(data, node.left);
         else node.right = add(data, node.right);
         return balance(node);
     }
@@ -109,8 +107,8 @@ public class TreeAVL<T extends Comparable> {
 
     private <K> TreeNode<T> remove(K value, TreeNode<T> node) {
         if (node == null) return null;
-        if (node.data.compareTo(value) < 0) node.left = remove(value, node.left);
-        else if (node.data.compareTo(value) > 0) node.right = remove(value, node.right);
+        if (node.data.compareTo(value) > 0) node.left = remove(value, node.left);
+        else if (node.data.compareTo(value) < 0) node.right = remove(value, node.right);
         else {
             successRemove = true;
             TreeNode<T> l = node.left;
@@ -132,10 +130,9 @@ public class TreeAVL<T extends Comparable> {
         return balance(node);
     }
 
-    public <K> boolean remove(K value, CallBack callBack) {
+    public <K> boolean remove(K value) {
         successRemove = false;
         root = remove(value, root);
-        callBack.callingBack();
         return successRemove;
     }
 
@@ -172,9 +169,8 @@ public class TreeAVL<T extends Comparable> {
         return findByStringField(fieldName, value, textSearch, root);
     }
 
-    public void clean(CallBack callBack) {
+    public void clear() {
         root = null;
-        callBack.callingBack();
     }
 
     private String toString(TreeNode<T> node) {
@@ -182,9 +178,9 @@ public class TreeAVL<T extends Comparable> {
         StringBuilder sb = new StringBuilder();
         String leftString = toString(node.left);
         String rightString = toString(node.right);
-        if (leftString.length() > 0) sb.append(leftString).append("\n");
+        if (!leftString.isEmpty()) sb.append(leftString).append("\n");
         sb.append(node.data.toString());
-        if (rightString.length() > 0) sb.append("\n").append(rightString);
+        if (!rightString.isEmpty()) sb.append("\n").append(rightString);
         return sb.toString();
     }
 

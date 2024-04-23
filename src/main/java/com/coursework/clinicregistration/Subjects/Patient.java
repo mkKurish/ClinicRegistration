@@ -77,6 +77,14 @@ public class Patient {
         return false;
     }
 
+    public static boolean trySetRegNum(String regNum){
+        return Utils.cRegNum(regNum);
+    }
+
+    public static boolean trySetFio(String fio){
+        return Utils.cLetters5_50(fio) && Utils.cLettersAndDot(fio);
+    }
+
     @Override
     public String toString() {
         StringBuilder answer = new StringBuilder();

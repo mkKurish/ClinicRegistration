@@ -1,8 +1,7 @@
 package com.coursework.clinicregistration.DataStructures;
 
-import com.coursework.clinicregistration.CallBack;
-
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class HashTableLinear<T> {
     Pair[] data;
@@ -11,7 +10,7 @@ public class HashTableLinear<T> {
     int size = 100;
     int step = 7;
 
-    private class Pair<T> {
+    private static class Pair<T> {
         T value;
         boolean deleted;
 
@@ -59,19 +58,43 @@ public class HashTableLinear<T> {
         return false;
     }
 
-    public <K> boolean contains(K value) throws IllegalAccessException {
+    public <K> T findByKey(K value) throws IllegalAccessException {
         int h = hashOfField(value);
         int count = 0;
-        while (count < size){
-            if (data[h] == null) return false;
-            if (!data[h].deleted && keyField.get(data[h].value).equals(value)) return true;
+        while (count < size) {
+            if (data[h] == null) return null;
+            if (!data[h].deleted && keyField.get(data[h].value).equals(value)) return (T) data[h].value;
             h = (h + step) % size;
             count++;
         }
-        return false;
+        return null;
     }
 
-    public <K> boolean remove(K value, CallBack callBack) throws IllegalAccessException {
+    public <K> int findHashByKey(K value) throws IllegalAccessException {
+        int h = hashOfField(value);
+        int count = 0;
+        while (count < size) {
+            if (data[h] == null) return -1;
+            if (!data[h].deleted && keyField.get(data[h].value).equals(value)) return h;
+            h = (h + step) % size;
+            count++;
+        }
+        return -1;
+    }
+
+    public <K> ArrayList<T> findByOtherField(String field, K value) throws IllegalAccessException, NoSuchFieldException {
+        Field currField = this.dataClass.getDeclaredField(field);
+        currField.setAccessible(true);
+        ArrayList<T> ans = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            if (data[i] != null && !data[i].deleted && currField.get(data[i].value).equals(value)) {
+                ans.add((T) data[i].value);
+            }
+        }
+        return ans;
+    }
+
+    public <K> boolean remove(K value) throws IllegalAccessException {
         int h = hashOfField(value);
         int count = 0;
         while (count < size) {
@@ -79,7 +102,6 @@ public class HashTableLinear<T> {
             if (!data[h].deleted && keyField.get(data[h].value).equals(value)) {
                 data[h].deleted = true;
                 data[h].value = null;
-                callBack.callingBack();
                 return true;
             }
             h = (h + step) % size;
@@ -88,13 +110,12 @@ public class HashTableLinear<T> {
         return false;
     }
 
-    public boolean removeBySubject(T value, CallBack callBack) throws IllegalAccessException {
-        return remove(keyField.get(value), callBack);
+    public boolean removeBySubject(T value) throws IllegalAccessException {
+        return remove(keyField.get(value));
     }
 
-    public void clear(CallBack callBack) {
+    public void clear() {
         data = new Pair[size];
-        callBack.callingBack();
     }
 
     @Override

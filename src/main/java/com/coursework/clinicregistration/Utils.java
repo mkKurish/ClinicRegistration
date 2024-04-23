@@ -1,5 +1,7 @@
 package com.coursework.clinicregistration;
 
+import java.util.Scanner;
+
 public class Utils {
     public static boolean cLetters5_50(String source) {
         if (source == null) return false;
@@ -41,5 +43,37 @@ public class Utils {
     public static boolean cTime(String source){
         if (source == null) return false;
         return source.matches("^([01][0-9]|2[0-3]):[0-5][0-9]$");
+    }
+
+    public static String stringInput(String welcome){
+        System.out.print(welcome);
+        Scanner sc = new Scanner(System.in);
+        if (sc.hasNextLine()) return sc.nextLine();
+        while (!sc.hasNextLine()){
+            System.out.println("Неверный ввод!");
+            System.out.print(welcome);
+        }
+        return sc.nextLine();
+    }
+
+    public static int intInput(String welcome){
+        System.out.print(welcome);
+        Scanner sc = new Scanner(System.in);
+        if (sc.hasNextInt()) return sc.nextInt();
+        while (!sc.hasNextInt()){
+            sc.nextLine();
+            System.out.println("Неверный ввод числа!");
+            System.out.print(welcome);
+        }
+        return sc.nextInt();
+    }
+
+    public static int timeDiff(String time1, String time2){
+        int t1 = 0, t2 = 0;
+        t1 += Integer.parseInt(time1.substring(0, 2)) * 60;
+        t1 += Integer.parseInt(time1.substring(3));
+        t2 += Integer.parseInt(time2.substring(0, 2)) * 60;
+        t2 += Integer.parseInt(time2.substring(3));
+        return t2 - t1;
     }
 }
